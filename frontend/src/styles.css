@@ -1,0 +1,245 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg: radial-gradient(1200px 500px at 10% 0%, #f2f0ff 0%, #fffaf2 45%, #f8fbff 100%);
+  --surface: #ffffff;
+  --border: #d8deea;
+  --text: #1b2334;
+  --muted: #5d6880;
+  --primary: #0057ff;
+  --primary-strong: #0041bf;
+  --active: #0f9152;
+  --sold: #0852d1;
+  --cancelled: #b54800;
+  --shadow: 0 12px 32px rgba(20, 34, 90, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Space Grotesk', sans-serif;
+  color: var(--text);
+  background: var(--bg);
+}
+
+.app-shell {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1rem 3rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.hero {
+  background: linear-gradient(135deg, #00285c 0%, #0057ff 45%, #00a3ff 100%);
+  color: white;
+  border-radius: 20px;
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+  animation: fadeUp 420ms ease;
+}
+
+.hero h1 {
+  margin: 0 0 0.2rem;
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+}
+
+.hero p {
+  margin-top: 0;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  padding: 1rem;
+  animation: fadeUp 520ms ease;
+}
+
+.card h2 {
+  margin: 0 0 0.8rem;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(80px, 1fr));
+  gap: 0.4rem;
+}
+
+.stat {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.4rem 0.6rem;
+  text-align: center;
+}
+
+.stat span {
+  display: block;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.toolbar {
+  margin: 1rem 0;
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+input,
+select {
+  padding: 0.55rem 0.75rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  font-family: inherit;
+}
+
+input:focus,
+select:focus {
+  outline: 2px solid rgba(0, 87, 255, 0.2);
+  border-color: var(--primary);
+}
+
+.button {
+  margin-top: 0.6rem;
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 11px;
+  background: var(--primary);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.button:hover {
+  background: var(--primary-strong);
+}
+
+.button.secondary {
+  background: #163f6c;
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 0.65rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.95rem;
+}
+
+.pill {
+  font-size: 0.8rem;
+  text-transform: capitalize;
+  border-radius: 999px;
+  padding: 0.25rem 0.5rem;
+}
+
+.pill-active {
+  background: rgba(15, 145, 82, 0.14);
+  color: var(--active);
+}
+
+.pill-sold {
+  background: rgba(8, 82, 209, 0.14);
+  color: var(--sold);
+}
+
+.pill-cancelled {
+  background: rgba(181, 72, 0, 0.14);
+  color: var(--cancelled);
+}
+
+.form-grid {
+  display: grid;
+  gap: 0.8rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+label {
+  display: grid;
+  gap: 0.35rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.8rem;
+}
+
+.template-list {
+  display: grid;
+  gap: 0.6rem;
+  margin: 0.9rem 0;
+}
+
+.template-item {
+  display: flex;
+  gap: 0.7rem;
+  align-items: flex-start;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.6rem;
+}
+
+.template-item small {
+  display: block;
+  color: var(--muted);
+}
+
+.message {
+  margin-top: 0.7rem;
+  font-size: 0.95rem;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  padding: 0.5rem 0.7rem;
+}
+
+.empty {
+  color: var(--muted);
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 720px) {
+  .stat-grid {
+    grid-template-columns: repeat(2, minmax(80px, 1fr));
+  }
+}

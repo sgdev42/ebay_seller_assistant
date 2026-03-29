@@ -1,0 +1,18 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "8000:8000"
+    environment:
+      EBAY_USE_MOCK: "true"
+      ENABLE_PERIODIC_SYNC: "true"
+      SYNC_INTERVAL_SECONDS: "900"
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend

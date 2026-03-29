@@ -205,3 +205,10 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# eBay Seller Assistant prototype
+backend/ebay_assistant.db
+backend/.env
+frontend/.env
+frontend/dist/
+frontend/node_modules/
