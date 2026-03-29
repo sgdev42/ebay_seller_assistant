@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 
 import { api } from './api/client'
 import EbayAuthForm from './components/EbayAuthForm'
@@ -17,7 +17,7 @@ export default function App() {
 
   const debouncedSearch = useMemo(() => search.trim(), [search])
 
-  async function loadItems() {
+  const loadItems = useCallback(async () => {
     setLoading(true)
     try {
       const data = await api.listItems({ status: statusFilter, search: debouncedSearch })
@@ -27,7 +27,7 @@ export default function App() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [statusFilter, debouncedSearch])
 
   async function syncItems() {
     setMessage('Syncing items from eBay...')
@@ -92,7 +92,7 @@ export default function App() {
 
   useEffect(() => {
     loadItems()
-  }, [statusFilter, debouncedSearch])
+  }, [loadItems])
 
   return (
     <main className="app-shell">
