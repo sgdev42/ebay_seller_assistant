@@ -8,6 +8,7 @@ FastAPI + React prototype based on `IMPLEMENTATION_PLAN.md`.
 - eBay OAuth/token settings from UI user input
 - Similar past listing search
 - Create listing from selected template
+- Pricing suggestion framework (average + trend + confidence)
 - CI workflow for backend/frontend checks
 
 ## Project structure
@@ -46,6 +47,7 @@ This starts backend on `:8000` and frontend on `:5173`.
 - `GET /api/ebay/auth-config`
 - `PUT /api/ebay/auth-config`
 - `POST /api/items/sync`
+- `POST /api/pricing/suggest`
 - `GET /api/items?status=&search=`
 - `GET /api/items/similar?title=&category=`
 - `POST /api/listings/from-template`

@@ -1,6 +1,14 @@
 import { useState } from 'react'
 
-export default function NewListingForm({ onSearch, similarItems, onCreate, creating }) {
+export default function NewListingForm({
+  onSearch,
+  similarItems,
+  onCreate,
+  onSuggestPrice,
+  suggestedPricing,
+  suggesting,
+  creating
+}) {
   const [query, setQuery] = useState('Nike Air Max 90')
   const [category, setCategory] = useState('Shoes')
   const [templateId, setTemplateId] = useState('')
@@ -23,6 +31,21 @@ export default function NewListingForm({ onSearch, similarItems, onCreate, creat
 
       <button className="button secondary" onClick={() => onSearch(query, category)}>
         Find Similar Listings
+      </button>
+
+      <button
+        className="button secondary"
+        onClick={() =>
+          onSuggestPrice({
+            title: titleOverride || query,
+            category,
+            currency: 'USD',
+            min_samples: 2
+          })
+        }
+        disabled={suggesting}
+      >
+        {suggesting ? 'Analyzing...' : 'Suggest Price'}
       </button>
 
       <div className="template-list">
@@ -69,6 +92,27 @@ export default function NewListingForm({ onSearch, similarItems, onCreate, creat
           />
         </label>
       </div>
+
+      {suggestedPricing ? (
+        <div className="pricing-card">
+          <strong>
+            Suggested Price: {suggestedPricing.currency} {suggestedPricing.suggested_price.toFixed(2)}
+          </strong>
+          <small>
+            Range: {suggestedPricing.currency} {suggestedPricing.min_price.toFixed(2)} -{' '}
+            {suggestedPricing.currency} {suggestedPricing.max_price.toFixed(2)} | Sample size:{' '}
+            {suggestedPricing.sample_size} | Trend: {suggestedPricing.trend} | Confidence:{' '}
+            {(suggestedPricing.confidence * 100).toFixed(0)}%
+          </small>
+          <small>{suggestedPricing.strategy}</small>
+          <button
+            className="button"
+            onClick={() => setPriceOverride(String(suggestedPricing.suggested_price))}
+          >
+            Apply Suggested Price
+          </button>
+        </div>
+      ) : null}
 
       <button
         className="button"

@@ -6,8 +6,10 @@ from app.config import settings
 from app.db.database import get_session
 from app.schemas.ebay_auth import EbayAuthConfigRead, EbayAuthConfigUpdate
 from app.schemas.item import ListingCreateFromTemplateRequest
+from app.schemas.pricing import PricingSuggestionRead, PricingSuggestionRequest
 from app.services.ebay_auth_service import EbayAuthService
 from app.services.item_service import ItemService
+from app.services.pricing_service import PricingService
 
 router = APIRouter(prefix="/api")
 
@@ -26,6 +28,10 @@ def get_ebay_client(session: Session) -> EbayClient:
 
 def get_item_service(session: Session = Depends(get_session)) -> ItemService:
     return ItemService(get_ebay_client(session))
+
+
+def get_pricing_service() -> PricingService:
+    return PricingService()
 
 
 @router.get("/health")
@@ -66,6 +72,24 @@ def sync_items(
     service: ItemService = Depends(get_item_service),
 ) -> dict[str, int]:
     return service.sync_items(session)
+
+
+@router.post("/pricing/suggest", response_model=PricingSuggestionRead)
+def suggest_price(
+    payload: PricingSuggestionRequest,
+    session: Session = Depends(get_session),
+    service: PricingService = Depends(get_pricing_service),
+):
+    try:
+        return service.suggest_price(
+            session,
+            title=payload.title,
+            category=payload.category,
+            currency=payload.currency,
+            min_samples=payload.min_samples,
+        )
+    except ValueError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
 
 
 @router.get("/items")

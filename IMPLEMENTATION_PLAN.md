@@ -4,7 +4,7 @@
 This assistant will:
 - Track all seller items (active, sold, cancelled) via eBay API
 - Enable new listings by referencing similar past listings
-- (Optional) Suggest prices based on eBay/online data
+- Suggest prices based on eBay/online data
 
 ---
 
@@ -38,16 +38,16 @@ Tested: Partially. Verified in UI behavior; no dedicated frontend test yet.
 Status: Partially completed. Endpoint/service path exists and creates listing records via `EbayClient`; real external eBay listing API call is still stubbed.
 Tested: Yes for mock path (`test_create_listing_from_template`), not tested against live eBay.
 
-### Phase 3: Pricing Recommendation (Optional)
-9. [ ] Fetch pricing data for similar items from eBay/other sources
-Status: Not started.
-Tested: No.
-10. [ ] Implement pricing suggestion logic (average, trends)
-Status: Not started.
-Tested: No.
-11. [ ] Display suggested price in listing creation UI
-Status: Not started.
-Tested: No.
+### Phase 3: Pricing Recommendation
+9. [~] Fetch pricing data for similar items from eBay/other sources
+Status: Framework started. Internal historical listing data source is implemented; external eBay/online market source adapters pending.
+Tested: Partially. Covered by backend pricing tests using seeded internal listing data.
+10. [x] Implement pricing suggestion logic (average, trends)
+Status: Completed for framework (`backend/app/services/pricing_service.py`) with average, range, trend detection, confidence score, and strategy notes.
+Tested: Yes. `backend/tests/test_pricing_service.py` covers suggestion path and insufficient data behavior.
+11. [x] Display suggested price in listing creation UI
+Status: Completed for framework (`NewListingForm` includes Suggest Price, displays recommendation, and Apply Suggested Price action).
+Tested: Partially. Backend-tested; frontend behavior implemented and CI lint/build pending normal frontend workflow run.
 
 ---
 
@@ -60,7 +60,8 @@ Tested: No.
 - frontend/src/components/ItemDashboard.jsx - Item tracking UI
 - frontend/src/components/NewListingForm.jsx - New listing UI
 - frontend/src/components/EbayAuthForm.jsx - eBay OAuth/token user input UI
-- backend/app/services/pricing_service.py - (Optional) Pricing logic (not implemented yet)
+- backend/app/services/pricing_service.py - Pricing logic framework
+- backend/app/schemas/pricing.py - Pricing request/response schemas
 
 ---
 
@@ -69,12 +70,12 @@ Tested: No.
 Current result: OAuth/token input + storage implemented, but real eBay API fetch is not connected yet.
 2. [~] Create new listing from template; confirm on eBay
 Current result: Mock listing creation works end-to-end and is unit-tested; real eBay confirmation pending live API integration.
-3. [ ] (Optional) Compare suggested price with market prices
-Current result: Not started.
+3. [~] Compare suggested price with market prices
+Current result: Framework in place with internal comparables; real external market comparison pending live eBay access.
 
 ## Test evidence (current)
 - Backend lint: `ruff check app tests` passed
-- Backend unit tests: `pytest` passed (`2 passed`)
+- Backend unit tests: `pytest` passed (`4 passed`)
 - Frontend CI: lint/build passing after ESLint fix in latest commit
 
 ---

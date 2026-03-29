@@ -44,5 +44,10 @@ export const api = {
     request('/api/listings/from-template', {
       method: 'POST',
       body: JSON.stringify(payload)
+    }),
+  suggestPrice: (payload) =>
+    request('/api/pricing/suggest', {
+      method: 'POST',
+      body: JSON.stringify(payload)
     })
 }

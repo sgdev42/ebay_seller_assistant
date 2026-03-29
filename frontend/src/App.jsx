@@ -12,7 +12,9 @@ export default function App() {
   const [similarItems, setSimilarItems] = useState([])
   const [loading, setLoading] = useState(false)
   const [creating, setCreating] = useState(false)
+  const [suggesting, setSuggesting] = useState(false)
   const [savingAuth, setSavingAuth] = useState(false)
+  const [suggestedPricing, setSuggestedPricing] = useState(null)
   const [message, setMessage] = useState('')
 
   const debouncedSearch = useMemo(() => search.trim(), [search])
@@ -68,6 +70,22 @@ export default function App() {
     }
   }
 
+  async function suggestPrice(payload) {
+    setSuggesting(true)
+    try {
+      const suggestion = await api.suggestPrice(payload)
+      setSuggestedPricing(suggestion)
+      setMessage(
+        `Suggested ${suggestion.currency} ${suggestion.suggested_price.toFixed(2)} from ${suggestion.sample_size} comparable items.`
+      )
+    } catch (error) {
+      setMessage(`Pricing suggestion failed: ${error.message}`)
+      setSuggestedPricing(null)
+    } finally {
+      setSuggesting(false)
+    }
+  }
+
   async function loadAuthConfig() {
     try {
       return await api.getEbayAuthConfig()
@@ -119,6 +137,9 @@ export default function App() {
         onSearch={searchSimilar}
         similarItems={similarItems}
         onCreate={createFromTemplate}
+        onSuggestPrice={suggestPrice}
+        suggestedPricing={suggestedPricing}
+        suggesting={suggesting}
         creating={creating}
       />
     </main>
