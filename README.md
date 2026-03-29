@@ -56,3 +56,8 @@ This starts backend on `:8000` and frontend on `:5173`.
 ## Notes
 - MVP defaults to `EBAY_USE_MOCK=true` for deterministic local dev/testing.
 - Real eBay OAuth + inventory/listing calls are stubbed behind `EbayClient` for later integration.
+
+## Latest Verification
+- Date: 2026-03-29
+- Backend: `ruff check app tests` passed, `pytest` passed (`4 passed`)
+- Frontend: local lint/build not executed in this environment (`npm` unavailable); validated via GitHub Actions frontend CI job

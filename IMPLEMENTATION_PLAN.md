@@ -77,6 +77,7 @@ Current result: Framework in place with internal comparables; real external mark
 - Backend lint: `ruff check app tests` passed
 - Backend unit tests: `pytest` passed (`4 passed`)
 - Frontend CI: lint/build passing after ESLint fix in latest commit
+- Last verification update: 2026-03-29 (local backend checks + CI frontend status)
 
 ---
 
