@@ -5,6 +5,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from sqlmodel import Session
 
+from app.api.ebay_notifications import router as ebay_notifications_router
 from app.api.routes import get_ebay_client, router
 from app.config import settings
 from app.db.database import engine, init_db
@@ -56,3 +57,4 @@ async def run_periodic_sync() -> None:
 
 
 app.include_router(router)
+app.include_router(ebay_notifications_router)

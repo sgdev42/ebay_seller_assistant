@@ -22,6 +22,8 @@ def get_ebay_client(session: Session) -> EbayClient:
         client_id=auth.client_id or settings.ebay_client_id,
         client_secret=auth.client_secret or settings.ebay_client_secret,
         refresh_token=auth.refresh_token or settings.ebay_refresh_token,
+        access_token=settings.ebay_access_token,
+        environment=settings.ebay_environment,
         marketplace_id=auth.marketplace_id or settings.ebay_marketplace_id,
     )
 
